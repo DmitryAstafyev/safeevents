@@ -70,3 +70,5 @@ safeevents.bind('C', function () {
 });
 safeevents.trigger('A');
 ```
+##Get full stack
+If you did not use async callbacks, you will get a full stack in any case in your browser's console. If you used some async callbacks, you should activate in devTools [async](https://developers.google.com/web/tools/chrome-devtools/javascript/step-code#enable_the_async_call_stack).
