@@ -253,3 +253,4 @@ paket-files/
 /typings
 /SafeEvents.njsproj
 /example/safeevents.js
+/bundleconfig.json
