@@ -1,5 +1,5 @@
 # safeevents
-SafeEvents is a very simple event emitter with basic feature: this library prevents loops. This solution was developed for front-end usage. 
+SafeEvents is a very simple event emitter with basic feature: this library prevents loops. This solution was developed for front-end usage, but can be used and on nodejs level. 
 ## Install
 Just attach library to your HTML page.
 ```html
@@ -72,3 +72,31 @@ safeevents.trigger('A');
 ```
 ##Get full stack
 If you did not use async callbacks, you will get a full stack in any case in your browser's console. If you used some async callbacks, you should activate in devTools [async](https://developers.google.com/web/tools/chrome-devtools/javascript/step-code#enable_the_async_call_stack).
+##Prevention of exception
+To prevent exception (on loop) you can attach a listener for such event.
+```javascript
+var safeevents = new SafeEvents();
+/*
+* Test F. Classic loop. Prevent exception
+* Events ordering: A -> B -> C -> A -> loop.
+*
+* Console: Uncaught Error: Event [A] called itself. Full chain: A, B, C
+*/
+safeevents.bind('A', function () {
+    safeevents.trigger('B');
+});
+safeevents.bind('B', function () {
+    safeevents.trigger('C');
+});
+safeevents.bind('C', function () {
+    safeevents.trigger('A');
+});
+safeevents.bind(safeevents.onloop, function (e, chain, last_event, stack) {
+    console.log('Error message: ' + e);
+    console.log('Full chain of events: ' + chain.join(', '));
+    console.log('Last event (generated loop): ' + last_event);
+    console.log('Error stack: ' + stack);
+});
+safeevents.trigger('A');
+```
+Now your application will not be stopped, but a loop will be stopped in any case. Such feature can be useful on nodejs level, where we should keep the server alive. You can use this feature to make some logs or notifications. 

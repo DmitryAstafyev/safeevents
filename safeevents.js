@@ -1,30 +1,46 @@
 ﻿"use strict";
 var SafeEvents = function () { };
 SafeEvents.prototype = {
+    onloop      : 'onloop',
 	_divider  	: '_$$_',
 	_before  	: 'SafeEvents___$',
 	_after  	: '$___',
 	__prefix  	: /SafeEvents___\$(.*?)\$___/gi,
 	__clear  	: /SafeEvents___\$|\$___/gi,
-	events 		: {},
+	_events     : {},
 	bind		: function(event, handle){
-		this.events[event] = this.events[event]	|| [];
-		this.events[event].push(handle);
+        this._events[event] = this._events[event] || [];
+        this._events[event].push(handle);
 	},
 	unbind		: function(event, handle){
-		this.events[event] !== void 0 && (~this.events[event].indexOf(handle) && this.events[event].splice(this.events[event].indexOf(handle), 1));
+        this._events[event] !== void 0 && (~this._events[event].indexOf(handle) && this._events[event].splice(this._events[event].indexOf(handle), 1));
 	},
 	trigger		: function(event){
 		var chain 	= this.chain(),
 			args 	= Array.prototype.slice.call(arguments, 1),
-			self 	= this;
-		if (~chain.indexOf(event)){
-			throw new Error('Event [' + event + '] called itself. Full chain: ' + chain.join(', '));
+            self    = this,
+            msg     = null,
+            stack   = null;
+        if (~chain.indexOf(event)) {
+            msg = 'Event [' + event + '] called itself. Full chain: ' + chain.join(', ');
+            if (this._events[this.onloop] !== void 0) {
+                try {
+                    throw new Error(msg);
+                } catch (e) {
+                    stack = e.stack;
+                }
+                this._events[this.onloop].forEach(function (handle) {
+                    handle.call(self, msg, chain, event, stack);
+                });
+                return false;
+            } else {
+                throw new Error(msg);
+            }
 		}
-		this.events = this.events || {};
-		if (this.events[event] !== void 0){
+        this._events = this._events || {};
+        if (this._events[event] !== void 0){
 			chain.push(event);
-			this.events[event].forEach(function(handle){
+            this._events[event].forEach(function(handle){
 				setTimeout((function(chain, handle, args){
 					return function (){
                         var wrapper = (new Function('return (function(){ return function ' + self._before + chain.join(self._divider) + self._after + '(callback){ callback(); };}());'))();
@@ -65,6 +81,9 @@ SafeEvents.inherit = function (dest) {
         for (var prop in SafeEvents.prototype) {
             prop !== 'inherit' && (_dest[prop] = SafeEvents.prototype[prop]);
         }
-        _dest.events = {};
+        _dest._events = {};
     }
 };
+if (typeof module !== "undefined" && module['exports'] !== void 0) {
+    module.exports = SafeEvents;
+}
