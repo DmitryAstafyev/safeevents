@@ -1,0 +1,22 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Example page</title>
+    <script type="text/javascript" src="safeevents.js"></script>
+</head>
+<body>
+    <script type="text/javascript">
+        var safeevents = new SafeEvents();
+        /*
+        * Test A. Classic.
+        *
+        * Console: Event A triggered
+        */
+        safeevents.bind('A', function () {
+            window.console.log('Event A triggered');
+        });
+        safeevents.trigger('A');
+    </script>
+</body>
+</html>

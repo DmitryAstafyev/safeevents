@@ -1,0 +1,31 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Example page</title>
+    <script type="text/javascript" src="safeevents.js"></script>
+</head>
+<body>
+    <script type="text/javascript">
+        var instance = function () { };
+        SafeEvents.inherit(instance);
+        instance = new instance();
+        /*
+        * Test C. Classic loop.
+        * Events ordering: A -> B -> C -> A -> loop.
+        *
+        * Console: Uncaught Error: Event [A] called itself. Full chain: A, B, C
+        */
+        instance.bind('A', function () {
+            instance.trigger('B');
+        });
+        instance.bind('B', function () {
+            instance.trigger('C');
+        });
+        instance.bind('C', function () {
+            instance.trigger('A');
+        });
+        instance.trigger('A');
+    </script>
+</body>
+</html>

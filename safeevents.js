@@ -1,4 +1,5 @@
-﻿var SafeEvents = function(){};
+﻿"use strict";
+var SafeEvents = function () { };
 SafeEvents.prototype = {
 	_divider  	: '_$$_',
 	_before  	: 'SafeEvents___$',
@@ -57,13 +58,13 @@ SafeEvents.prototype = {
 		}
 		return callback;
     },
-    inherit     : function (dest) {
-        var _dest = typeof dest === 'function' ? dest.prototype : (typeof dest === 'object' ? dest : null);
-        if (_dest !== null) {
-            for (var prop in SafeEvents.prototype) {
-                prop !== 'inherit' && (_dest[prop] = SafeEvents.prototype[prop]);
-            }
-            _dest.prototype.events = {};
+};
+SafeEvents.inherit = function (dest) {
+    var _dest = typeof dest === 'function' ? dest.prototype : (typeof dest === 'object' ? dest : null);
+    if (_dest !== null) {
+        for (var prop in SafeEvents.prototype) {
+            prop !== 'inherit' && (_dest[prop] = SafeEvents.prototype[prop]);
         }
+        _dest.events = {};
     }
 };

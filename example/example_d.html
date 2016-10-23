@@ -1,0 +1,36 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Example page</title>
+    <script type="text/javascript" src="safeevents.js"></script>
+</head>
+<body>
+    <script type="text/javascript">
+        var instance = function () { };
+        SafeEvents.inherit(instance);
+        instance = new instance();
+        /*
+        * Test D. Async loop.
+        * Events ordering: A -> B -> C -> async(A) -> loop.
+        *
+        * Console: Uncaught Error: Event [A] called itself. Full chain: A, B, C
+        */
+        instance.bind('A', function () {
+            instance.trigger('B');
+        });
+        instance.bind('B', function () {
+            instance.trigger('C');
+        });
+        instance.bind('C', function () {
+            /*
+            * Use method "safely" to wrap your async methods and create safe callback.
+            */
+            setTimeout(instance.safely(function () {
+                instance.trigger('A');
+            }), 10);
+        });
+        instance.trigger('A');
+    </script>
+</body>
+</html>

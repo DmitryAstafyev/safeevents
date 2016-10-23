@@ -1,0 +1,29 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Example page</title>
+    <script type="text/javascript" src="safeevents.js"></script>
+</head>
+<body>
+    <script type="text/javascript">
+        var safeevents = new SafeEvents();
+        /*
+        * Test A. Classic loop.
+        * Events ordering: A -> B -> C -> A -> loop.
+        *
+        * Console: Uncaught Error: Event [A] called itself. Full chain: A, B, C
+        */
+        safeevents.bind('A', function () {
+            safeevents.trigger('B');
+        });
+        safeevents.bind('B', function () {
+            safeevents.trigger('C');
+        });
+        safeevents.bind('C', function () {
+            safeevents.trigger('A');
+        });
+        safeevents.trigger('A');
+    </script>
+</body>
+</html>
