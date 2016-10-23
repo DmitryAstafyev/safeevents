@@ -1,5 +1,7 @@
 # safeevents
-SafeEvents is a very simple event emitter with basic feature: this library prevents loops. This solution was developed for front-end usage, but can be used and on nodejs level. 
+SafeEvents is a very simple event emitter with basic feature: this library prevents loops. This solution was developed for front-end usage, but can be used and on nodejs level.
+#npm
+[npm](https://www.npmjs.com/package/safeevents) 
 ## Install
 Just attach library to your HTML page.
 ```html
