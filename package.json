@@ -1,9 +1,19 @@
 {
   "name"        : "safeevents",
-  "version"     : "1.0.0",
+  "version"     : "0.0.1",
   "description" : "Anti-loop event emitter library (front-end solution)",
   "main"        : "safeevents.js",
   "author"      : {
     "name"      : "Dmitry Astafyev"
+  },
+  "keywords"    : [ "event", "emitter", "loop" ],
+  "license"     : {
+    "type"      : "Apache-2.0",
+    "url"       : "http://opensource.org/licenses/apache2.0.php"
+  },
+  "email"       : "D.Astafyev@outlook.com",
+  "repository"  : {
+    "type"      : "git",
+    "url"       : "https://github.com/DmitryAstafyev/safeevents.git"
   }
 }
