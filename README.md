@@ -108,3 +108,6 @@ Now your application will not be stopped, but a loop will be stopped in any case
 
 ### 0.0.2
 * fix module property checking (prevent gulp conflict);
+
+### 0.0.3
+* cleanup correction
