@@ -24,22 +24,16 @@ SafeEvents.prototype = {
 		var chain 	= this.chain(),
 			args 	= Array.prototype.slice.call(arguments, 1),
             self    = this,
-            msg     = null,
-            stack   = null;
+            error   = null;
         if (~chain.indexOf(event)) {
-            msg = 'Event [' + event + '] called itself. Full chain: ' + chain.join(', ');
+            error = new Error('Event [' + event + '] called itself. Full chain: ' + chain.join(', '));
             if (this._events[this.onloop] !== void 0) {
-                try {
-                    throw new Error(msg);
-                } catch (e) {
-                    stack = e.stack;
-                }
                 this._events[this.onloop].forEach(function (handle) {
-                    handle.call(self, msg, chain, event, stack);
+                    handle.call(self, error.message, chain, event, error.stack);
                 });
                 return false;
             } else {
-                throw new Error(msg);
+                throw error;
             }
 		}
         this._events = this._events || {};
@@ -58,18 +52,14 @@ SafeEvents.prototype = {
 		}
 	},
 	chain		: function(){
-		var chain = null;
-		try{
-			throw new Error('Stack checking');
-		} catch (e){
-			chain = e.stack.match(this.__prefix);
-			if (chain instanceof Array && chain.length === 1){
-				chain = chain[0].replace(this.__clear, '');
-				chain = chain !== '' ? chain.split(this._divider) : [];
-			} else {
-				chain = [];
-			}
-		}
+        var error = new Error('Stack checking'),
+            chain = error.stack.match(this.__prefix);
+        if (chain instanceof Array && chain.length === 1) {
+            chain = chain[0].replace(this.__clear, '');
+            chain = chain !== '' ? chain.split(this._divider) : [];
+        } else {
+            chain = [];
+        }
 		return chain;
 	},
 	safely  	: function(callback){
