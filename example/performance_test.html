@@ -1,0 +1,43 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Example page</title>
+    <script type="text/javascript" src="safeevents.js"></script>
+</head>
+<body>
+    <script type="text/javascript">
+        function getEventName() {
+            var symbols = 'qwertyuiopasdfghjklzxvcbnmQWERTYUIOPASDFGHJKLZXCVBNM',
+                res     = '';
+            for (var i = 10; i >= 0; i -= 1) {
+                res += symbols.charAt(Math.floor(Math.random()*(symbols.length - 1)));
+            }
+            return res;
+        };
+        var safeevents = new SafeEvents(),
+            events      = [],
+            event       = '';
+        /*
+        * Test P. Performance.
+        *
+        * Console: Uncaught Error: Event [A] called itself. Full chain: A, B, C
+        */
+        for (var i = 1000; i >= 0; i -= 1) {
+            do{
+                event = getEventName();
+            } while (~events.indexOf(event));
+            events.push(event);
+        }
+        events.forEach(function (event, index, events) {
+            var _event = events[index + 1] !== void 0 ? events[index + 1] : events[0];
+            safeevents.bind(event, function () {
+                var start = performance.now();
+                safeevents.trigger(_event);
+                console.log(event + '->' + _event + ':' + (performance.now() - start).toFixed(4) + 'ms');
+            });
+        });
+        safeevents.trigger(events[0]);
+    </script>
+</body>
+</html>
