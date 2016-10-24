@@ -17,7 +17,8 @@
         };
         var safeevents = new SafeEvents(),
             events      = [],
-            event       = '';
+            event       = '',
+            handles     = {};
         /*
         * Test P. Performance.
         *
@@ -31,11 +32,23 @@
         }
         events.forEach(function (event, index, events) {
             var _event = events[index + 1] !== void 0 ? events[index + 1] : events[0];
-            safeevents.bind(event, function () {
+            handles[event] = function () {
                 var start = performance.now();
                 safeevents.trigger(_event);
                 console.log(event + '->' + _event + ':' + (performance.now() - start).toFixed(4) + 'ms');
+            };
+            safeevents.bind(event, handles[event]);
+        });
+        safeevents.bind(safeevents.onloop, function (e, chain, last_event, stack) {
+            console.log('Error message: ' + e);
+            console.log('Full chain of events: ' + chain.join(', '));
+            console.log('Last event (generated loop): ' + last_event);
+            console.log('Error stack: ' + stack);
+            events.forEach(function (event, index, events) {
+                safeevents.unbind(event, handles[event]);
             });
+            handles = null;
+            events  = null;
         });
         safeevents.trigger(events[0]);
     </script>

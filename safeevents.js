@@ -12,8 +12,13 @@ SafeEvents.prototype = {
         this._events[event] = this._events[event] || [];
         this._events[event].push(handle);
 	},
-	unbind		: function(event, handle){
-        this._events[event] !== void 0 && (~this._events[event].indexOf(handle) && this._events[event].splice(this._events[event].indexOf(handle), 1));
+    unbind      : function (event, handle) {
+        if (this._events[event] !== void 0){
+            (~this._events[event].indexOf(handle) && this._events[event].splice(this._events[event].indexOf(handle), 1));
+            if (this._events[event].length === 0) {
+                delete this._events[event];
+            }
+        }
 	},
 	trigger		: function(event){
 		var chain 	= this.chain(),
