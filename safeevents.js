@@ -1,5 +1,5 @@
 ﻿"use strict";
-var SafeEvents = function () { };
+var SafeEvents = function () { this._events = {}; };
 SafeEvents.prototype = {
     onloop      : 'onloop',
 	_divider  	: '_$$_',
@@ -7,7 +7,6 @@ SafeEvents.prototype = {
 	_after  	: '$___',
 	__prefix  	: /SafeEvents___\$(.*?)\$___/gi,
 	__clear  	: /SafeEvents___\$|\$___/gi,
-	_events     : {},
 	bind		: function(event, handle){
         this._events[event] = this._events[event] || [];
         this._events[event].push(handle);
