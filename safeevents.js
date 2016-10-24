@@ -84,6 +84,6 @@ SafeEvents.inherit = function (dest) {
         _dest._events = {};
     }
 };
-if (typeof module !== "undefined" && module['exports'] !== void 0) {
+if (typeof module !== "undefined" && module.exports !== void 0) {
     module.exports = SafeEvents;
 }
