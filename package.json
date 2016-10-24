@@ -1,7 +1,7 @@
 {
   "name"        : "safeevents",
   "version"     : "0.0.1",
-  "description" : "Anti-loop event emitter library (front-end solution)",
+  "description" : "Anti-loop event emitter library",
   "main"        : "safeevents.js",
   "author"      : {
     "name"      : "Dmitry Astafyev"

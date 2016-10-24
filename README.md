@@ -102,3 +102,8 @@ safeevents.bind(safeevents.onloop, function (e, chain, last_event, stack) {
 safeevents.trigger('A');
 ```
 Now your application will not be stopped, but a loop will be stopped in any case. Such feature can be useful on nodejs level, where we should keep the server alive. You can use this feature to make some logs or notifications. 
+##Changelog
+### 0.0.1
+* base version
+### 0.0.2
+* fix module property checking (preven gulp conflict);
