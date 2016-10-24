@@ -111,3 +111,6 @@ Now your application will not be stopped, but a loop will be stopped in any case
 
 ### 0.0.3
 * cleanup correction
+
+### 0.0.4
+* optimization: removed try ... catch ... blocks
