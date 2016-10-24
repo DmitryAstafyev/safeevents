@@ -107,4 +107,4 @@ Now your application will not be stopped, but a loop will be stopped in any case
 * base version
 
 ### 0.0.2
-* fix module property checking (preven gulp conflict);
+* fix module property checking (prevent gulp conflict);
