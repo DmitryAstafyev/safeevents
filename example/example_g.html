@@ -1,0 +1,33 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Example page</title>
+    <script type="text/javascript" src="safeevents.js"></script>
+</head>
+<body>
+    <script type="text/javascript">
+        var safeevents = new SafeEvents();
+        /*
+        * Test F. Classic loop. Prevent exception. Any names
+        *
+        */
+        safeevents.bind('Name of event can be any', function () {
+            safeevents.trigger('Next');
+        });
+        safeevents.bind('Next', function () {
+            safeevents.trigger('Next Next');
+        });
+        safeevents.bind('Next Next', function () {
+            safeevents.trigger('Name of event can be any');
+        });
+        safeevents.bind(safeevents.onloop, function (e, chain, last_event, stack) {
+            console.log('Error message: ' + e);
+            console.log('Full chain of events: ' + chain.join(', '));
+            console.log('Last event (generated loop): ' + last_event);
+            console.log('Error stack: ' + stack);
+        });
+        safeevents.trigger('Name of event can be any');
+    </script>
+</body>
+</html>

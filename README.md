@@ -114,3 +114,9 @@ Now your application will not be stopped, but a loop will be stopped in any case
 
 ### 0.0.4
 * optimization: removed try ... catch ... blocks
+
+### 0.0.5
+* optimization: cleanup
+
+### 0.0.6
+* refactoring: removed event's name limitation (name of event now can be any)
