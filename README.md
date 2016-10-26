@@ -108,29 +108,29 @@ Now your application will not be stopped, but a loop will be stopped in any case
 SafeEvents creates event markers to make debug process easy. If you will take a look on examples/example_a in colsole you will find next information
 
 ```javascript
-trigger					@	safeevents.js:29
-(anonymous function)	@	example_a.html:24
-(anonymous function)	@	safeevents.js:45
-event_C_$$$0_1_2$		@	VM8802:2			//Marker for event "C"
-(anonymous function)	@	safeevents.js:44
+trigger                 @	safeevents.js:29
+(anonymous function)    @	example_a.html:24
+(anonymous function)    @	safeevents.js:45
+event_C_$$$0_1_2$       @	VM8802:2			//Marker for event "C"
+(anonymous function)    @	safeevents.js:44
 setTimeout (async)		
-(anonymous function)	@	safeevents.js:41
-trigger					@	safeevents.js:40
-(anonymous function)	@	example_a.html:21
-(anonymous function)	@	safeevents.js:45
+(anonymous function)    @	safeevents.js:41
+trigger                 @	safeevents.js:40
+(anonymous function)    @	example_a.html:21
+(anonymous function)    @	safeevents.js:45
 event_B_$$$0_1$			@	VM8801:2			//Marker for event "B"
-(anonymous function)	@	safeevents.js:44
+(anonymous function)    @	safeevents.js:44
 setTimeout (async)		
-(anonymous function)	@	safeevents.js:41
-trigger					@	safeevents.js:40
-(anonymous function)	@	example_a.html:18
-(anonymous function)	@	safeevents.js:45
+(anonymous function)    @	safeevents.js:41
+trigger                 @	safeevents.js:40
+(anonymous function)    @	example_a.html:18
+(anonymous function)    @	safeevents.js:45
 event_A_$$$0$			@	VM8800:2			//Marker for event "A"
-(anonymous function)	@	safeevents.js:44
+(anonymous function)    @	safeevents.js:44
 setTimeout (async)		
-(anonymous function)	@	safeevents.js:41
-trigger					@	safeevents.js:40
-(anonymous function)	@	example_a.html:26
+(anonymous function)    @	safeevents.js:41
+trigger                 @	safeevents.js:40
+(anonymous function)    @	example_a.html:26
 ```
 So, in console you see names of all events in chain. It will help you with debug process.
 
