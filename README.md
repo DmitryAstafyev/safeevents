@@ -190,3 +190,6 @@ So, in console you see names of all events in chain. It will help you with debug
 
 ### 0.0.7
 * add event markers for debug process
+
+### 0.0.8
+* add possibility do not break loop
