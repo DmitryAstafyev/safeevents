@@ -74,6 +74,7 @@ safeevents.trigger('A');
 ```
 ##Get full stack
 If you did not use async callbacks, you will get a full stack in any case in your browser's console. If you used some async callbacks, you should activate in devTools [async](https://developers.google.com/web/tools/chrome-devtools/javascript/step-code#enable_the_async_call_stack).
+
 ##Prevention of exception
 To prevent exception (on loop) you can attach a listener for such event.
 ```javascript
@@ -102,6 +103,37 @@ safeevents.bind(safeevents.onloop, function (e, chain, last_event, stack) {
 safeevents.trigger('A');
 ```
 Now your application will not be stopped, but a loop will be stopped in any case. Such feature can be useful on nodejs level, where we should keep the server alive. You can use this feature to make some logs or notifications. 
+
+## Event markers
+SafeEvents creates event markers to make debug process easy. If you will take a look on examples/example_a in colsole you will find next information
+
+```javascript
+trigger					@	safeevents.js:29
+(anonymous function)	@	example_a.html:24
+(anonymous function)	@	safeevents.js:45
+event_C_$$$0_1_2$		@	VM8802:2			//Marker for event "C"
+(anonymous function)	@	safeevents.js:44
+setTimeout (async)		
+(anonymous function)	@	safeevents.js:41
+trigger					@	safeevents.js:40
+(anonymous function)	@	example_a.html:21
+(anonymous function)	@	safeevents.js:45
+event_B_$$$0_1$			@	VM8801:2			//Marker for event "B"
+(anonymous function)	@	safeevents.js:44
+setTimeout (async)		
+(anonymous function)	@	safeevents.js:41
+trigger					@	safeevents.js:40
+(anonymous function)	@	example_a.html:18
+(anonymous function)	@	safeevents.js:45
+event_A_$$$0$			@	VM8800:2			//Marker for event "A"
+(anonymous function)	@	safeevents.js:44
+setTimeout (async)		
+(anonymous function)	@	safeevents.js:41
+trigger					@	safeevents.js:40
+(anonymous function)	@	example_a.html:26
+```
+So, in console you see names of all events in chain. It will help you with debug process.
+
 ##Changelog
 ### 0.0.1
 * base version
@@ -120,3 +152,6 @@ Now your application will not be stopped, but a loop will be stopped in any case
 
 ### 0.0.6
 * refactoring: removed event's name limitation (name of event now can be any)
+
+### 0.0.7
+* add event markers for debug process

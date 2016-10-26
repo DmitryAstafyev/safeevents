@@ -40,7 +40,7 @@ SafeEvents.prototype = {
             this._events.handles[event].forEach(function(handle){
                 setTimeout((function (func, handle, args){
                     return function () {
-                        var wrapper = (new Function('return (function(){ return function ' + func + '(callback){ callback(); };}());'))();
+                        var wrapper = (new Function('return (function(){ return function event_' + event.replace(/[^\w\d]/gi, '') + '_' + func + '(callback){ callback(); };}());'))();
 						wrapper(function(){
 							handle.apply(self, args);
 						});
