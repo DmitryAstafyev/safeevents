@@ -53,6 +53,7 @@ safeevents.bind('C', function () {
 safeevents.trigger('A');
 ```
 Event A triggers B; B -> C and C again A. This is a loop. But SafeEvents will block it and you will see in console something like this: "Uncaught Error: Event [A] called itself. Full chain: A, B, C". And sure, a full stack will available.
+
 To prevent loops in async callbacks you should use a method "safely", like in next example:
 ```javascript
 var safeevents = new SafeEvents();
@@ -103,6 +104,40 @@ safeevents.bind(safeevents.onloop, function (e, chain, last_event, stack) {
 safeevents.trigger('A');
 ```
 Now your application will not be stopped, but a loop will be stopped in any case. Such feature can be useful on nodejs level, where we should keep the server alive. You can use this feature to make some logs or notifications. 
+
+##Do not break loop
+In case if you do not need break loop, you can listen [onloop] event and return as result [false]. In this case loop will not be stopped.
+```javascript
+var safeevents  = new SafeEvents(),
+    count       = 0;
+/*
+* Test F. Classic loop.  Prevent exception. Stop loop on 5th circle.
+* Events ordering: A -> B -> C -> A -> loop.
+*
+* Console: Uncaught Error: Event [A] called itself. Full chain: A, B, C
+*/
+safeevents.bind('A', function () {
+    safeevents.trigger('B');
+});
+safeevents.bind('B', function () {
+    safeevents.trigger('C');
+});
+safeevents.bind('C', function () {
+    safeevents.trigger('A');
+});
+safeevents.bind(safeevents.onloop, function (e, chain, last_event, stack) {
+    console.log('Error message: ' + e);
+    console.log('Full chain of events: ' + chain.join(', '));
+    console.log('Last event (generated loop): ' + last_event);
+    console.log('Error stack: ' + stack);
+    console.log('This is circle #: ' + count++);
+    count > 5 && console.log('Breaking loop');
+    //Break loop if it's 5th circle
+    return count <= 5 ? false : true;
+});
+safeevents.trigger('A');
+```
+In this example, loop will be stopped ather 5th circle of loop.
 
 ## Event markers
 SafeEvents creates event markers to make debug process easy. If you will take a look on examples/example_a in colsole you will find next information

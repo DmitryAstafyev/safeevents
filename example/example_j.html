@@ -7,10 +7,9 @@
 </head>
 <body>
     <script type="text/javascript">
-        var safeevents  = new SafeEvents(),
-            count       = 0;
+        var safeevents = new SafeEvents();
         /*
-        * Test F. Classic loop. Prevent exception. Stop loop on 5th circle.
+        * Test F. Classic loop. Prevent exception
         * Events ordering: A -> B -> C -> A -> loop.
         *
         * Console: Uncaught Error: Event [A] called itself. Full chain: A, B, C
@@ -29,10 +28,7 @@
             console.log('Full chain of events: ' + chain.join(', '));
             console.log('Last event (generated loop): ' + last_event);
             console.log('Error stack: ' + stack);
-            console.log('This is circle #: ' + count++);
-            count > 5 && console.log('Breaking loop');
-            //Break loop if it's 5th circle
-            return count <= 5 ? false : true;
+            //Break loop with void as returning 
         });
         safeevents.trigger('A');
     </script>

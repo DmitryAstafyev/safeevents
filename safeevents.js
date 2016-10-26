@@ -24,14 +24,16 @@ SafeEvents.prototype = {
 		var chain 	= this.chain(event),
 			args 	= Array.prototype.slice.call(arguments, 1),
             self    = this,
-            error   = null;
+            error   = null,
+            prevent = null;
         if (chain.loop) {
             error = new Error('Event [' + event + '] called itself. Full chain: ' + chain.chain.join(', '));
             if (this._events.handles[this.onloop] !== void 0) {
                 this._events.handles[this.onloop].forEach(function (handle) {
-                    handle.call(self, error.message, chain.chain, event, error.stack);
+                    var res = handle.call(self, error.message, chain.chain, event, error.stack);
+                    prevent = prevent ? prevent : (typeof res !== 'boolean' ? true : res);
                 });
-                return false;
+                if (prevent) return false;
             } else {
                 throw error;
             }
