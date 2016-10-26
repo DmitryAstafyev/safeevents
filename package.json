@@ -1,6 +1,6 @@
 {
   "name": "safeevents",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "Anti-loop event emitter library",
   "main": "safeevents.js",
   "author": {
