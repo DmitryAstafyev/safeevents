@@ -153,14 +153,14 @@ setTimeout (async)
 trigger                 @	safeevents.js:40
 (anonymous function)    @	example_a.html:21
 (anonymous function)    @	safeevents.js:45
-event_B_$$$0_1$			@	VM8801:2			//Marker for event "B"
+event_B_$$$0_1$         @	VM8801:2			//Marker for event "B"
 (anonymous function)    @	safeevents.js:44
 setTimeout (async)		
 (anonymous function)    @	safeevents.js:41
 trigger                 @	safeevents.js:40
 (anonymous function)    @	example_a.html:18
 (anonymous function)    @	safeevents.js:45
-event_A_$$$0$			@	VM8800:2			//Marker for event "A"
+event_A_$$$0$           @	VM8800:2			//Marker for event "A"
 (anonymous function)    @	safeevents.js:44
 setTimeout (async)		
 (anonymous function)    @	safeevents.js:41
